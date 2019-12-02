@@ -1,21 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="nav">
+      <router-link to="/">Chat</router-link> |
+      <router-link to="/about">Om applikationen</router-link>
+      <logout-button v-if="isAuthenticated"></logout-button>
+    </div>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+import Logout from './components/Logout.vue';
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    'logout-button': Logout
+  },
+  computed: {
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
+    }
   }
 }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -23,6 +30,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
