@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('user') || '',
-    status: '',
+    status: false,
     socket: {
       isConnected: false,
       message: '',
@@ -15,24 +15,43 @@ export default new Vuex.Store({
   },
   mutations: {
     AUTH_REQUEST: (state) => {
-      state.status = 'loading'
+      state.status = {content: 'Loading...', error: false}
     },
     AUTH_SUCCESS: (state, token) => {
-      state.status = 'success'
+      state.status = {content: 'Success', error: false}
       state.token = token
     },
     AUTH_ERROR: (state) => {
-      state.status = 'Der skete en fejl ved login'
+      state.status = {content: 'Bruger ikke oprettet', error: true}
     },
     AUTH_LOGOUT: (state) => {
-      state.status = 'Logged out'
-    }
+      state.status = {content: 'Du er nu logget ud', error: false}
+    },
+    CREATION_REQUEST: (state) => {
+      state.status = {content: 'Loading...', error: false}
+    },
+    CREATION_SUCCESS: (state) => {
+      state.status = {content: 'Du kan nu logge ind', error: false}
+    },
+    CREATION_ERROR: (state) => {
+      state.status = {content: 'Der skete en fejl ved oprettelsen', error: true}
+    },
   },
   getters: {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status,
   },
   actions: {
+    CREATION_REQUEST: ({commit}, user) => {
+      commit('CREATION_REQUEST');
+      Vue.prototype.$socket.emit('creation', user);
+    },
+    CREATION_SUCCESS: ({commit}) => {
+      commit('CREATION_SUCCESS');
+    },
+    CREATION_ERROR: ({commit}) => {
+      commit('CREATION_ERROR');
+    },
     AUTH_REQUEST: ({commit}, user) => {
       commit('AUTH_REQUEST')
       Vue.prototype.$socket.emit('auth', user);

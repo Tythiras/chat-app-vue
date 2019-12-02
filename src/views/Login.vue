@@ -1,15 +1,18 @@
 <template>
     <div>
         <form class="login" @submit.prevent="login">
-            <p>{{status}}</p>
             <h1>Login</h1>
-            <label>User name</label>
-            <input required type="text" placeholder="Snoopy" v-model="username" />
-            <br>
+            <div class="status" v-if="status" v-bind:class="{ error: status.error }">
+                <span class="inner">
+                    {{status.content}}
+                </span>
+            </div>
+            <label>Brugernavn</label>
+            <input required type="text" placeholder="Brugernavn" v-model="username" />
             <label>Password</label>
             <input required type="password" placeholder="Password" v-model="password" />
-            <hr/>
-            <button type="submit">Login</button>
+            <button style="width: 30%;" type="submit" class="submit">Login</button>
+            <router-link to="/register" class="margin">Opret ny profil nu</router-link>
         </form>
     </div>
 </template>
@@ -48,3 +51,11 @@ export default {
     }
 }
 </script>
+
+<style>
+.submit {
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+</style>

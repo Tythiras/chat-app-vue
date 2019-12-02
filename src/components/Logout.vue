@@ -1,8 +1,9 @@
 <template>
     <div>
-        <button @click="logout">Logud</button>
+        <button id="logout" @click="logout">Log ud</button>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -19,3 +20,10 @@ export default {
     }
 }
 </script>
+<style>
+#logout {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+</style>
