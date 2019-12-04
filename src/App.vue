@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" v-if="isAuthenticated">
       <router-link to="/">Chat</router-link> |
       <router-link to="/about">Om</router-link>
-      <logout-button v-if="isAuthenticated"></logout-button>
+      <logout-button></logout-button>
     </div>
     <router-view/>
   </div>
@@ -105,7 +105,7 @@ label {
 input {
   margin: auto;
   margin-top: 10px;
-  margin-bottom:50px;
+  margin-bottom:10px;
   background-attachment:scroll;
   background-clip:border-box;
   background-color:rgba(0, 0, 0, 0);

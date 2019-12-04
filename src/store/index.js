@@ -58,7 +58,7 @@ export default new Vuex.Store({
     },
     AUTH_SUCCESS: ({commit, state}, token) => {
       commit('AUTH_SUCCESS')
-      localStorage.setItem('user', token)
+      localStorage.setItem('user', true)
       state.token = token;
     },
     AUTH_FAILED: ({commit}) => {

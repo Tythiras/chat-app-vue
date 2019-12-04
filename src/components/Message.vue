@@ -1,29 +1,36 @@
 <template>
     <li>
-       <div v-bind:class="{ mSender: message.receiver=='you', mReceiver: message.receiver!='you' }">
+       <div v-bind:class="{ mSender: !message.isReceiver, mReceiver: message.isReceiver }">
            <span>{{message.content}}</span>
         </div> 
     </li>
 </template>
 
+<script>
+export default {
+    props: {
+        message: Object
+    }
+}
+</script>
 <style>
     li {
         position: relative;
         margin: 15px 0;
     }
-    .mSender {
+    .mReceiver {
         padding-right: 32px;
     }
-    .mSender span {
+    .mReceiver span {
         background: lightgray;
         z-index: 2;
     }
-    .mReceiver {
+    .mSender {
         display: flex;
         justify-content: flex-end;
         padding-left: 32px;
     }
-    .mReceiver span {
+    .mSender span {
         background: rgb(5, 161, 212);
         color: #fff;
         z-index: 2;
@@ -49,11 +56,3 @@
         max-width: 100%;
     }
 </style>
-<script>
-export default {
-    name: 'logout',
-    props: {
-        message: Object
-    }
-}
-</script>

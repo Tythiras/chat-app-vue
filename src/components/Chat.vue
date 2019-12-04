@@ -18,9 +18,12 @@
 import Message from '@/components/Message.vue'
 
 export default {
-  name: 'chat',
   components: {
     Message
+  },
+
+  props: {
+    currUser: Number
   },
   data () {
     return {
@@ -37,21 +40,26 @@ export default {
   },
   methods: {
     sendMessage() {
-      let obj = {
-        receiver: "them",
-        content: this.newMessage
+      if(this.newMessage) {
+        let obj = {
+          isReceiver: 0,
+          content: this.newMessage
+        }
+        this.messages.push(obj);
+        this.$socket.emit('message', {target: this.currUser})
+        this.newMessage = '';
       }
-      this.messages.push(obj);
-      this.newMessage = '';
     },
     getAllMessages() {
-      this.$socket.emit('getMessages', {token: this.$store.state.token});
+      this.$socket.emit('getMessages', {target: this.currUser});
     }
   },
   sockets: {
-    messages: function (data) {
+    getMessages: function (data) {
       this.messages = data;
-      
+    },
+    newMessage: function (data) {
+      this.messages.push(data);
     }
   }
   

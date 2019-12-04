@@ -6,14 +6,6 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "dashboard",
-    meta: { 
-      requiresAuth: true
-    },
-    component: () => import("../views/Chat.vue")
-  },
-  {
     path: "/about",
     name: "about",
     meta: { 
@@ -38,6 +30,14 @@ const routes = [
     component: () => import("../views/Register.vue")
   },
   { path: "/404", component: () => import("../views/404.vue") },
+  {
+    path: "/:user?",
+    name: "dashboard",
+    meta: { 
+      requiresAuth: true
+    },
+    component: () => import("../views/Overview.vue")
+  },
   { path: "*", redirect: "/404" }
 ];
 
