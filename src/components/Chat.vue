@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      messages: [],
+      messages: [{isReceiver: 1, content: 'Loading..'}],
       newMessage: ''
     }
   },

@@ -14,6 +14,17 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    SOCKET_CONNECT(state) {
+      state.socket.isConnected = true;
+      if(state.token) {
+        Vue.prototype.$socket.emit('auth', {token: state.token});
+      }
+    },
+    SOCKET_AUTH(state, data) {
+      if(!data.success) {
+        state.token = '';
+      }
+    },
     AUTH_REQUEST: (state) => {
       state.status = {content: 'Loading...', error: false}
     },
@@ -25,7 +36,7 @@ export default new Vuex.Store({
       state.status = {content: 'Bruger ikke oprettet', error: true}
     },
     AUTH_LOGOUT: (state) => {
-      state.status = {content: 'Du er nu logget ud', error: false}
+      state.status = false
     },
     CREATION_REQUEST: (state) => {
       state.status = {content: 'Loading...', error: false}

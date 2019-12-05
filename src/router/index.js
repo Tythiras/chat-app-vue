@@ -48,6 +48,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  store.state.status = false;
   const loggedIn = store.getters.isAuthenticated;
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!loggedIn) {
