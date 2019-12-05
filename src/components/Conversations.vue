@@ -38,8 +38,11 @@ export default {
   },
   sockets: {
     getConversations: function (data) {
-      this.conversations = data;
-      this.filter();
+      if(data.success) {
+        this.conversations = data.rows;
+        this.filter();
+
+      }
     },
   } 
 }

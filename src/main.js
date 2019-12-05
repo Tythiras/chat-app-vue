@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import VueSocketIO from 'vue-socket.io'
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: false,
   connection: 'localhost:3000',
   vuex: {
       store,

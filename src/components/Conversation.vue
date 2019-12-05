@@ -1,7 +1,7 @@
 <template>
     <router-link :to="{name: 'dashboard', params: {user: conversation.id}}">
         <li v-bind:class="{ active: current }">
-            <span>{{conversation.name}}</span>
+            <span>{{conversation.username}}</span>
         </li>
     </router-link>
 </template>

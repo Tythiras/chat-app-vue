@@ -46,17 +46,17 @@ export default {
           content: this.newMessage
         }
         this.messages.push(obj);
-        this.$socket.emit('message', {target: this.currUser})
+        this.$socket.emit('message', {userId: this.currUser})
         this.newMessage = '';
       }
     },
     getAllMessages() {
-      this.$socket.emit('getMessages', {target: this.currUser});
+      this.$socket.emit('getConversation', {userId: this.currUser});
     }
   },
   sockets: {
-    getMessages: function (data) {
-      this.messages = data;
+    getConversation: function (data) {
+      this.messages = data.rows;
     },
     newMessage: function (data) {
       this.messages.push(data);
