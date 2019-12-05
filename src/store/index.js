@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router';
 
 Vue.use(Vuex)
 
@@ -14,15 +15,18 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    SOCKET_CONNECT(state) {
+    SOCKET_connect: (state) => {
       state.socket.isConnected = true;
       if(state.token) {
+        //reiniziate socket connection with saved token
         Vue.prototype.$socket.emit('auth', {token: state.token});
       }
     },
-    SOCKET_AUTH(state, data) {
-      if(!data.success) {
-        state.token = '';
+    SOCKET_auth: (state, data) => {
+      if(data.success===false&&router.currentRoute.name!='login') {
+        localStorage.removeItem('user')
+        state.token = ''
+        router.push("/login")
       }
     },
     AUTH_REQUEST: (state) => {
@@ -69,7 +73,7 @@ export default new Vuex.Store({
     },
     AUTH_SUCCESS: ({commit, state}, token) => {
       commit('AUTH_SUCCESS')
-      localStorage.setItem('user', true)
+      localStorage.setItem('user', token)
       state.token = token;
     },
     AUTH_FAILED: ({commit}) => {
@@ -80,7 +84,7 @@ export default new Vuex.Store({
         localStorage.removeItem('user')
         state.token = ''
         commit('AUTH_LOGOUT')
-        resolve("tester")
+        resolve()
       })
     }
   },

@@ -23,7 +23,7 @@ export default {
   },
 
   props: {
-    currUser: Number
+    currUser: String
   },
   data () {
     return {
