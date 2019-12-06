@@ -39,7 +39,7 @@ export default {
   sockets: {
     getConversations: function (data) {
       if(data.success) {
-        this.conversations = data.rows;
+        this.conversations = data.conversations;
         this.filter();
 
       }

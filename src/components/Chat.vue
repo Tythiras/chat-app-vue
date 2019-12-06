@@ -36,30 +36,34 @@ export default {
   },
   updated() { 
     let el = this.$refs.messages;
-    el.scrollTop = el.clientHeight;
+    el.scrollTop = el.scrollHeight;
   },
   methods: {
     sendMessage() {
       if(this.newMessage) {
         let obj = {
           isReceiver: 0,
+          receiver: this.currUser,
           content: this.newMessage
         }
         this.messages.push(obj);
-        this.$socket.emit('message', {userId: this.currUser})
+        this.$socket.emit('message', obj);
         this.newMessage = '';
       }
     },
     getAllMessages() {
-      this.$socket.emit('getConversation', {userId: this.currUser});
+      this.$socket.emit('getConversationMessages', {userId: this.currUser});
     }
   },
   sockets: {
-    getConversation: function (data) {
-      this.messages = data.rows;
+    getConversationMessages: function (data) {
+      this.messages = data.messages;
     },
     newMessage: function (data) {
-      this.messages.push(data);
+      if(data.from==this.currUser) {
+        this.messages.push(data);
+
+      }
     }
   }
   
