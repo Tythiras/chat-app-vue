@@ -60,7 +60,6 @@ export default {
       this.messages = data.messages;
     },
     newMessage: function (data) {
-      alert(data.from);
       if(data.from==this.currUser) {
         this.messages.push(data);
 
