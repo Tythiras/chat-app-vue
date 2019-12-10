@@ -1,6 +1,6 @@
 <template>
     <router-link :to="{name: 'dashboard', params: {user: conversation.id.toString()}}">
-        <li v-bind:class="{ active: current }">
+        <li v-bind:class="{ active: current, unread: unread }">
             <span>{{conversation.username}}</span>
         </li>
     </router-link>
@@ -15,12 +15,16 @@
     li.active {
         color: gray;
     }
+    li.unread {
+        color: red;
+    }
 </style>
 <script>
 export default {
     props: {
         conversation: Object,
-        current: Boolean
+        current: Boolean,
+        unread: Boolean
     }
 }
 </script>

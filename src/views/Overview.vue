@@ -1,7 +1,17 @@
 <template>
     <div class="overview">
-        <Conversations :currUser="this.currUser" class="conversations" />
-        <Chat v-if="this.currUser" :currUser="this.currUser" :key="this.currUser" class="chat" />
+        <Conversations
+            :currUser="this.currUser"
+            :unread="this.unread"
+            class="conversations"
+        />
+        <Chat
+            v-if="this.currUser"
+            @unread="newUnread"
+            :currUser="this.currUser"
+            :key="this.currUser"
+            class="chat" 
+        />
     </div>
 </template>
 
@@ -31,7 +41,8 @@ export default {
     },
     data () {
         return {
-            currUser: ''
+            currUser: '',
+            unread: []
         }
     },
     created() {
@@ -43,8 +54,14 @@ export default {
         }
     },
     methods: {
+        newUnread(conversation) {
+            this.unread.push(conversation);
+        },
         checkUser() {
             this.currUser = this.$route.params.user ? this.$route.params.user : null;
+            if(this.currUser) {
+                this.unread = this.unread.filter(conv => this.currUser != conv);
+            }
         }
     }
 }

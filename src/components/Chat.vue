@@ -1,7 +1,11 @@
 <template>
   <div>    
     <ul ref="messages">
-      <Message v-for="(message, index) in messages" :key="index" :message="message"></Message>
+      <Message
+        v-for="(message, index) in messages"
+        :key="index"
+        :message="message"
+      />
     </ul>
     <form class="sendMessage" @submit.prevent="sendMessage">
       <input v-model="newMessage" placeholder="Send besked">
@@ -62,7 +66,8 @@ export default {
     newMessage: function (data) {
       if(data.from==this.currUser) {
         this.messages.push(data);
-
+      } else {
+        this.$emit('unread', data.from);
       }
     }
   }
